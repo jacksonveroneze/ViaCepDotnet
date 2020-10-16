@@ -1,6 +1,6 @@
-## Interest
+## ViaCepDotnet
 
-Projeto desenvolvido com o objetivo de realizar o cálculo de juros.
+Projeto desenvolvido com o objetivo de realizar buscas de CEPS no webserice do VIA CEP.
 
 ### Iniciando
 Use as intruções abaixo para rodar o projeto.
@@ -33,7 +33,7 @@ Siga estas etapas para para rodar o projeto em produção:
      ```
      dotnet run
      ```
-  4. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:6001/swagger
+  4. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:5001/swagger
 
 #### Setup (Com Docker)
 
@@ -46,40 +46,32 @@ Siga estas etapas para para rodar o projeto em produção:
      docker-compose build
      docker-compose up -d
      ```
-  3. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:8000/swagger
+  3. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:5000/swagger
 
 ### Exemplos
 
-#### Api - Taxa de juros
+#### Api
 
 ```
-curl -X GET "http://localhost:5000/taxaJuros" -H "accept: application/json"
+curl -X GET "http://localhost:5000/search-cep/89665-000" -H "accept: application/json"
 
 {
-  "rate": 0.01
+  "numero": "89665-000",
+  "logradouro": "",
+  "complemento": "",
+  "bairro": "",
+  "localidade": "Capinzal",
+  "uf": "SC",
+  "unidade": 1,
+  "ibge": 1,
+  "gia": ""
 }
 ````
 
-#### Api - Cálculo juros
-
-```
-curl -X GET "http://localhost:6000/calculajuros?valorInicial=100&meses=5" -H "accept: application/json"
-
-{
-  "result": 105.1
-}
-````
-
-#### Api - Taxa de juros (Healthcheck)
+#### Api (Healthcheck)
 
 ```
 curl -X GET "http://localhost:5000/health"
-````
-
-#### Api - Cálculo juros (Healthcheck)
-
-```
-curl -X GET "http://localhost:6000/health"
 ````
 
 ### Technologies:
@@ -88,9 +80,11 @@ curl -X GET "http://localhost:6000/health"
 - ASP.NET Core 3.1
 - ASP.NET WebApi Core 3.1
 - .NET Core Native DI
+- Entity Framework Core
 - Refit
 - Polly
 - Serilog
+- SQL Server
 - Docker
 - Github Actions
 - SonarQube
@@ -100,5 +94,5 @@ curl -X GET "http://localhost:6000/health"
 
 
 ### Licença
-Este projeto está licenciado sob a Licença MIT: [LICENSE.md](http://github.com/jacksonveroneze/Interest/blob/develop/LICENSE).
+Este projeto está licenciado sob a Licença MIT: [LICENSE.md](http://github.com/jacksonveroneze/ViaCepDotnet/blob/develop/LICENSE).
 
