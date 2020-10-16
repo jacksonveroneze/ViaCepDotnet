@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using JacksonVeroneze.ViaCep.Domain.Command;
@@ -13,14 +14,24 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
         private readonly ICepRepository _cepRepository;
         private readonly IMapper _mapper;
 
-        public CepService(ICepRepository cepRepository, IMapper mapper)
+        public readonly IList<string> _errors = new List<string>();
+
+        public CepService(ICepHttpService cepHttpService, ICepRepository cepRepository, IMapper mapper)
         {
+            _cepHttpService = cepHttpService;
             _cepRepository = cepRepository;
             _mapper = mapper;
         }
 
         public async Task<SearchDataResult> SearchcAsync(string number)
         {
+            if (number.Length != 9)
+            {
+                _errors.Add("O CEP informado é inválido");
+
+                return null;
+            }
+            
             Cep cep = await _cepRepository.FindByCepAsync(number);
             
             if (cep is null)
@@ -37,6 +48,11 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
             }
 
             return _mapper.Map<Cep, SearchDataResult>(cep);
+        }
+
+        public IList<string> GetErrors()
+        {
+            return _errors;
         }
     }
 }

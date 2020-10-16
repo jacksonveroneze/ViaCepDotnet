@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JacksonVeroneze.ViaCep.AntiCorruption\JacksonVeroneze.ViaCep.AntiCorruption.csproj" />
     <ProjectReference Include="..\JacksonVeroneze.ViaCep.Data\JacksonVeroneze.ViaCep.Data.csproj" />
   </ItemGroup>
 

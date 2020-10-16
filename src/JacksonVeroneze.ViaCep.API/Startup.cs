@@ -26,6 +26,8 @@ namespace JacksonVeroneze.ViaCep.API
     {
         public IConfiguration Configuration { get; }
 
+        private const string AllowAllCors = "AllowAll";
+
         public Startup(IHostEnvironment hostEnvironment)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
@@ -55,7 +57,7 @@ namespace JacksonVeroneze.ViaCep.API
                     SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12
                 })
                 .AddPolicyHandler(retryPolicy);
-            
+
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<DatabaseContext>(
                     options => options.UseSqlServer(
@@ -69,6 +71,17 @@ namespace JacksonVeroneze.ViaCep.API
             services.AddSwaggerConfiguration();
 
             services.AddHealthChecks();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(AllowAllCors,
+                    builder =>
+                    {
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                        builder.AllowAnyOrigin();
+                    });
+            });
 
             services.AddResponseCompression();
 
@@ -87,6 +100,8 @@ namespace JacksonVeroneze.ViaCep.API
             app.UseSwaggerConfiguration();
 
             app.UseHealthChecks("/health");
+
+            app.UseCors(AllowAllCors);
 
             app.UseResponseCompression();
 

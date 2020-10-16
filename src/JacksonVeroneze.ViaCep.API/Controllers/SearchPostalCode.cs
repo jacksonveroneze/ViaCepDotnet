@@ -1,5 +1,7 @@
-﻿using System.Net.Mime;
+﻿using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using JacksonVeroneze.ViaCep.Domain.Command;
 using JacksonVeroneze.ViaCep.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -34,14 +36,24 @@ namespace JacksonVeroneze.ViaCep.API.Controllers
         // Summary:
         //     /// Method responsible for action: Get (GET). ///
         //
-        [HttpGet("{numero}")]
+        [HttpGet("{number}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
-        public async Task<ActionResult> Get(string numero)
+        public async Task<ActionResult> Get(string number)
         {
-            _logger.LogInformation("Request: {0}", "Solicitado busca de CEP");
+            _logger.LogInformation("Request: {0}", $"Solicitado busca de CEP: [{number}].");
 
-            return Ok(await _cepService.SearchcAsync(numero));
+            SearchDataResult result = await _cepService.SearchcAsync(number);
+
+            if (result is null && _cepService.GetErrors().Any())
+            {
+                _logger.LogInformation("Request: {0}",
+                    $"Houve os seguintes erros: [{string.Join(";", _cepService.GetErrors())}].");
+
+                return BadRequest(new {Errors = _cepService.GetErrors()});
+            }
+
+            return Ok(await _cepService.SearchcAsync(number));
         }
     }
 }

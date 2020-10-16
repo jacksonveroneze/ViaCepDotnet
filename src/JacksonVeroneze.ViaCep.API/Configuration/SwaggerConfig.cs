@@ -13,8 +13,8 @@ namespace JacksonVeroneze.ViaCep.API.Configuration
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "VIACEP - Consulta de CEPs",
-                    Description = "VIACEP - Consulta de CEPs.",
+                    Title = "VIA CEP - Consulta de CEPs",
+                    Description = "VIA CEP - Consulta de CEPs.",
                     Contact = new OpenApiContact() { Name = "Jackson Veroneze", Email = "jackson@jacksonveroneze.com" },
                     License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
                 });
