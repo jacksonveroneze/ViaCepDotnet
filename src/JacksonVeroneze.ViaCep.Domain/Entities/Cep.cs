@@ -1,4 +1,5 @@
 using System.Numerics;
+using JacksonVeroneze.ViaCep.BuildingBlocks;
 
 namespace JacksonVeroneze.ViaCep.Domain.Entities
 {
@@ -6,7 +7,7 @@ namespace JacksonVeroneze.ViaCep.Domain.Entities
     // Summary:
     //     Class responsible for the entity.
     //
-    public class Cep
+    public class Cep : BaseEntity
     {
         public int Id { get; private set; }
         

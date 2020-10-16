@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.ViaCep.Data
 {
-    public class Context : DbContext
+    public class DatabaseContext : DbContext
     {
-        public Context(DbContextOptions<Context> options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
 

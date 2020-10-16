@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repository" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\JacksonVeroneze.ViaCep.Domain\JacksonVeroneze.ViaCep.Domain.csproj" />
   </ItemGroup>
 
