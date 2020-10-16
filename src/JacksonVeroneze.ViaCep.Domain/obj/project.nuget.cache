@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "UsInP7kyyT8shRq8slxel2h1UxmVhadCcFI96NcD6ZVCYQ2+O4xCBzjx91EPjoaldhjcS3aKOKrVz+PE7+kDWA==",
+  "success": true,
+  "projectFilePath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/jackson/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/jackson/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
