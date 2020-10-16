@@ -24,6 +24,77 @@
         },
         "frameworks": {
           "netstandard2.0": {
+            "projectReferences": {
+              "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj": {
+                "projectPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.403/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj",
+        "projectName": "JacksonVeroneze.ViaCep.Domain",
+        "projectPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj",
+        "packagesPath": "/home/jackson/.nuget/packages/",
+        "outputPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/jackson/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
             "projectReferences": {}
           }
         },
