@@ -1,25 +1,23 @@
 version: "3.7"
 services:
-    calculator-api:
+    api:
         build:
             context: .
-            dockerfile: DockerfileCalculator
+            dockerfile: Dockerfile
         ports:
             - 8000:80
         links:
-            - rate-api
+            - database
         environment:
             - ASPNETCORE_URLS=http://+:80
             - DOTNET_RUNNING_IN_CONTAINER=true
             - ASPNETCORE_ENVIRONMENT=Docker
 
-    rate-api:
-        build:
-            context: .
-            dockerfile: DockerfileRate
+    database:
+        container_name: database
+        image: mcr.microsoft.com/mssql/server:2017-CU8-ubuntu
         ports:
-            - 8001:80
+            - 1433:1433
         environment:
-            - ASPNETCORE_URLS=http://+:80
-            - DOTNET_RUNNING_IN_CONTAINER=true
-            - ASPNETCORE_ENVIRONMENT=Production
+            SA_PASSWORD: "P@sswordSQLServer123"
+            ACCEPT_EULA: "Y"

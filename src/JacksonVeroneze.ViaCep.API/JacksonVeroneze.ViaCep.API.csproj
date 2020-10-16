@@ -5,15 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.1.8" />
     <PackageReference Include="Refit.HttpClientFactory" Version="5.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
   </ItemGroup>
 
-  
   <ItemGroup>
-    <Folder Include="Middlewares" />
+    <ProjectReference Include="..\JacksonVeroneze.ViaCep.AntiCorruption\JacksonVeroneze.ViaCep.AntiCorruption.csproj" />
+    <ProjectReference Include="..\JacksonVeroneze.ViaCep.Data\JacksonVeroneze.ViaCep.Data.csproj" />
   </ItemGroup>
 
 

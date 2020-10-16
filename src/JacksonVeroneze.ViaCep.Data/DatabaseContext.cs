@@ -6,6 +6,11 @@ namespace JacksonVeroneze.ViaCep.Data
 {
     public class DatabaseContext : DbContext
     {
+        public DatabaseContext()
+        {
+            
+        }
+        
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }

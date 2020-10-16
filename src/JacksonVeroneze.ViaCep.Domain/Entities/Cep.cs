@@ -9,8 +9,6 @@ namespace JacksonVeroneze.ViaCep.Domain.Entities
     //
     public class Cep : BaseEntity
     {
-        public int Id { get; private set; }
-        
         public string Numero { get; private set; }
         
         public string Logradouro { get; private set; }
@@ -23,7 +21,7 @@ namespace JacksonVeroneze.ViaCep.Domain.Entities
         
         public string Uf { get; private set; }
         
-        public BigInteger Unidade { get; private set; }
+        public int Unidade { get; private set; }
         
         public int Ibge { get; private set; }
         
@@ -67,7 +65,7 @@ namespace JacksonVeroneze.ViaCep.Domain.Entities
         //  gia:
         //     The gia param.
         //
-        public Cep(string numero, string logradouro, string complemento, string bairro, string localidade, string uf, BigInteger unidade, int ibge, string gia)
+        public Cep(string numero, string logradouro, string complemento, string bairro, string localidade, string uf, int unidade, int ibge, string gia)
         {
             Numero = numero;
             Logradouro = logradouro;

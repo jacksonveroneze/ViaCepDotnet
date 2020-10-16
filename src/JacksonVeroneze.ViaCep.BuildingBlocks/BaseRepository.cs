@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.ViaCep.BuildingBlocks
 {
-
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         protected readonly DbContext _context;
@@ -20,9 +19,9 @@ namespace JacksonVeroneze.ViaCep.BuildingBlocks
         }
 
         public Task<List<T>> FindAllAsync()
-            => _context.Set<T>().ToListAsync();
+            => _context.Set<T>().AsNoTracking().ToListAsync();
 
         public Task<T> FindAsync(int id)
-            => _context.Set<T>().FindAsync(id);
+            => _context.Set<T>().SingleOrDefaultAsync(x => x.Id == id);
     }
 }

@@ -37,7 +37,8 @@ namespace JacksonVeroneze.ViaCep.Data.Mappings
                 .HasColumnType("char(2)");
 
             builder.Property(c => c.Unidade)
-                .HasColumnName("unidade");
+                .HasColumnName("unidade")
+                .HasColumnType("int");
 
             builder.Property(c => c.Ibge)
                 .HasColumnName("ibge");
@@ -45,6 +46,18 @@ namespace JacksonVeroneze.ViaCep.Data.Mappings
             builder.Property(c => c.Gia)
                 .HasColumnName("gia")
                 .HasColumnType("varchar(500)");
+
+            builder.Property(c => c.CreatedAt)
+                .HasColumnName("created_at");
+
+            builder.Property(c => c.UpdatedAt)
+                .HasColumnName("updated_at");
+
+            builder.Property(c => c.DeletedAt)
+                .HasColumnName("deleted_at");
+
+            builder.Property(c => c.Version)
+                .HasColumnName("version");
         }
     }
 }

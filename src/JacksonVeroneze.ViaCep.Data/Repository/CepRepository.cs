@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using JacksonVeroneze.ViaCep.BuildingBlocks;
 using JacksonVeroneze.ViaCep.Domain.Entities;
 using JacksonVeroneze.ViaCep.Domain.Interfaces;
@@ -15,9 +16,11 @@ namespace JacksonVeroneze.ViaCep.Data.Repository
         //   context:
         //     The context param.
         //
-        public CepRepository(DbContext context) : base(context)
+        public CepRepository(DatabaseContext context) : base(context)
         {
-
         }
+
+        public Task<Cep> FindByCepAsync(string number)
+            => _context.Set<Cep>().SingleOrDefaultAsync(x => x.Numero == number);
     }
 }
