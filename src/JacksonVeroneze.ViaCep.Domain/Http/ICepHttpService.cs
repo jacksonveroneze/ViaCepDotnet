@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using JacksonVeroneze.ViaCep.Domain;
 using Refit;
 
-namespace JacksonVeroneze.ViaCep.AntiCorruption
+namespace JacksonVeroneze.ViaCep.Domain.Http
 {
 
     [Headers(new[] { "Accept: application/json;charset=UTF-8" })]

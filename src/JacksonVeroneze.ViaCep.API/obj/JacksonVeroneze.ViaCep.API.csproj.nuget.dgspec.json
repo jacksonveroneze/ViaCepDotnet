@@ -25,9 +25,6 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.AntiCorruption/JacksonVeroneze.ViaCep.AntiCorruption.csproj": {
-                "projectPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.AntiCorruption/JacksonVeroneze.ViaCep.AntiCorruption.csproj"
-              },
               "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Data/JacksonVeroneze.ViaCep.Data.csproj": {
                 "projectPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Data/JacksonVeroneze.ViaCep.Data.csproj"
               }
@@ -43,6 +40,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -80,66 +81,6 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.403/RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.AntiCorruption/JacksonVeroneze.ViaCep.AntiCorruption.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.AntiCorruption/JacksonVeroneze.ViaCep.AntiCorruption.csproj",
-        "projectName": "JacksonVeroneze.ViaCep.AntiCorruption",
-        "projectPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.AntiCorruption/JacksonVeroneze.ViaCep.AntiCorruption.csproj",
-        "packagesPath": "/home/jackson/.nuget/packages/",
-        "outputPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.AntiCorruption/obj/",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "/home/jackson/.nuget/NuGet/NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {
-              "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj": {
-                "projectPath": "/home/jackson/workspace/ViaCepDotnet/src/JacksonVeroneze.ViaCep.Domain/JacksonVeroneze.ViaCep.Domain.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "Refit": {
-              "target": "Package",
-              "version": "[5.2.1, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -309,6 +250,16 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            },
+            "Refit": {
+              "target": "Package",
+              "version": "[5.2.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

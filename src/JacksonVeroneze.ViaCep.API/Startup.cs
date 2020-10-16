@@ -1,12 +1,14 @@
 using System;
 using System.Net.Http;
 using System.Security.Authentication;
-using JacksonVeroneze.ViaCep.AntiCorruption;
+using AutoMapper;
 using JacksonVeroneze.ViaCep.API.Configuration;
 using JacksonVeroneze.ViaCep.API.Middlewares;
 using JacksonVeroneze.ViaCep.Data;
 using JacksonVeroneze.ViaCep.Data.Repository;
+using JacksonVeroneze.ViaCep.Domain.Http;
 using JacksonVeroneze.ViaCep.Domain.Interfaces;
+using JacksonVeroneze.ViaCep.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +61,9 @@ namespace JacksonVeroneze.ViaCep.API
                     options => options.UseSqlServer(
                         Configuration.GetConnectionString("Cep")));
 
+            services.AddAutoMapper(typeof(MappingProfile));
+
+            services.AddScoped<ICepService, CepService>();
             services.AddScoped<ICepRepository, CepRepository>();
 
             services.AddSwaggerConfiguration();
