@@ -38,6 +38,10 @@ namespace JacksonVeroneze.ViaCep.Data.Migrations
                         .HasColumnName("created_at")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Ddd")
+                        .HasColumnName("ddd")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnName("deleted_at")
                         .HasColumnType("datetime2");
@@ -62,13 +66,13 @@ namespace JacksonVeroneze.ViaCep.Data.Migrations
                         .HasColumnName("numero")
                         .HasColumnType("char(9)");
 
+                    b.Property<int>("Siafi")
+                        .HasColumnName("siafi")
+                        .HasColumnType("int");
+
                     b.Property<string>("Uf")
                         .HasColumnName("uf")
                         .HasColumnType("char(2)");
-
-                    b.Property<int>("Unidade")
-                        .HasColumnName("unidade")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnName("updated_at")

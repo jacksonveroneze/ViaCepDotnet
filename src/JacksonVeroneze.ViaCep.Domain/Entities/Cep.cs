@@ -10,29 +10,31 @@ namespace JacksonVeroneze.ViaCep.Domain.Entities
     public class Cep : BaseEntity
     {
         public string Numero { get; private set; }
-        
+
         public string Logradouro { get; private set; }
-        
+
         public string Complemento { get; private set; }
-        
+
         public string Bairro { get; private set; }
-        
+
         public string Localidade { get; private set; }
-        
+
         public string Uf { get; private set; }
-        
-        public int Unidade { get; private set; }
-        
+
         public int Ibge { get; private set; }
-        
+
         public string Gia { get; private set; }
+
+        public int Ddd { get; private set; }
+
+        public int Siafi { get; private set; }
 
         //
         // Summary:
         //     /// Method responsible for initializing the entity. ///
         //
         public Cep() : base() { }
-        
+
         //
         // Summary:
         //     /// Method responsible for initializing the entity. ///
@@ -56,16 +58,19 @@ namespace JacksonVeroneze.ViaCep.Domain.Entities
         //  uf:
         //     The uf param.
         //
-        //  unidade:
-        //     The unidade param.
-        //
         //  ibge:
         //     The ibge param.
         //
         //  gia:
         //     The gia param.
         //
-        public Cep(string numero, string logradouro, string complemento, string bairro, string localidade, string uf, int unidade, int ibge, string gia)
+        //  ddd:
+        //     The ddd param.
+        //
+        //  siafi:
+        //     The siafi param.
+        //
+        public Cep(string numero, string logradouro, string complemento, string bairro, string localidade, string uf, int ibge, string gia, int ddd, int siafi)
         {
             Numero = numero;
             Logradouro = logradouro;
@@ -73,9 +78,10 @@ namespace JacksonVeroneze.ViaCep.Domain.Entities
             Bairro = bairro;
             Localidade = localidade;
             Uf = uf;
-            Unidade = unidade;
             Ibge = ibge;
             Gia = gia;
+            Ddd = ddd;
+            Siafi = siafi;
         }
     }
 }

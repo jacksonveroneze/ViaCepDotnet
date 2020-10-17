@@ -23,31 +23,44 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
             _mapper = mapper;
         }
 
-        public async Task<SearchDataResult> SearchcAsync(string number)
+        public async Task<SearchDataResult> SearchZipCodeAsync(string value)
         {
-            if (number.Length != 9)
+            if (value.Length != 9)
             {
                 _errors.Add("O CEP informado é inválido");
 
                 return null;
             }
-            
-            Cep cep = await _cepRepository.FindByCepAsync(number);
-            
-            if (cep is null)
+
+            Cep postalCode = await _cepRepository.FindByZipCodeAsync(value);
+
+            if (postalCode is null)
             {
-                ViaCepResponse response = await _cepHttpService.FindAsync(number);
-            
+                ViaCepResponse response = await _cepHttpService.FindAsync(value);
+
                 if (response != null)
                 {
-                    cep = new Cep(response.Cep, response.Logradouro, response.Complemento, response.Bairro,
-                        response.Localidade, response.Uf, 1, 1, response.Gia);
-            
-                    await _cepRepository.AddAsync(cep);
+                    postalCode = new Cep(response.Cep, response.Logradouro, response.Complemento, response.Bairro, response.Localidade, response.Uf, response.Ibge, response.Gia, response.Ddd, response.Siafi);
+
+                    await _cepRepository.AddAsync(postalCode);
                 }
             }
 
-            return _mapper.Map<Cep, SearchDataResult>(cep);
+            return _mapper.Map<Cep, SearchDataResult>(postalCode);
+        }
+
+        public async Task<IList<SearchDataResult>> SearchStateAsync(string value)
+        {
+            if (value.Length != 2)
+            {
+                _errors.Add("O estado informado é inválido");
+
+                return null;
+            }
+
+            List<Cep> listPostalCode = await _cepRepository.FindByStateAsync(value);
+
+            return _mapper.Map<List<Cep>, List<SearchDataResult>>(listPostalCode);
         }
 
         public IList<string> GetErrors()

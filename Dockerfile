@@ -1,15 +1,17 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build-env
+
+RUN apk add icu-libs
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
 WORKDIR /app
 
-ADD src/Services/Rate/Interest.Rate.API ./src/Services/Rate/Interest.Rate.API/
-ADD src/BuildingBlocks/Interest.Core ./src/BuildingBlocks/Interest.Core
-RUN ls
-RUN dotnet restore src/Services/Rate/Interest.Rate.API/Interest.Rate.API.csproj
+ADD ./src app
 
-RUN dotnet publish src/Services/Rate/Interest.Rate.API -c Release -o out
+RUN dotnet restore app/JacksonVeroneze.ViaCep.API/JacksonVeroneze.ViaCep.API.csproj
 
-# Build da imagem
+RUN dotnet publish app/JacksonVeroneze.ViaCep.API/JacksonVeroneze.ViaCep.API.csproj -c Release -o out
+
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 WORKDIR /app
 COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "Interest.Rate.API.dll"]
+ENTRYPOINT ["dotnet", "JacksonVeroneze.ViaCep.API.dll"]

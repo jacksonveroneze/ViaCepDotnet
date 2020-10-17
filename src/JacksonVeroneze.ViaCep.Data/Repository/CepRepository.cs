@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using JacksonVeroneze.ViaCep.BuildingBlocks;
 using JacksonVeroneze.ViaCep.Domain.Entities;
@@ -10,7 +12,7 @@ namespace JacksonVeroneze.ViaCep.Data.Repository
     {
         //
         // Summary:
-        //     /// Médodo responsável por inicializar o repository. ///
+        //     /// Method responsible for initializing the repository. ///
         //
         // Parameters:
         //   context:
@@ -20,7 +22,26 @@ namespace JacksonVeroneze.ViaCep.Data.Repository
         {
         }
 
-        public Task<Cep> FindByCepAsync(string number)
-            => _context.Set<Cep>().SingleOrDefaultAsync(x => x.Numero == number);
+        //
+        // Summary:
+        //     /// Method responsible for search by cep. ///
+        //
+        // Parameters:
+        //   value:
+        //     The value param.
+        //
+        public Task<Cep> FindByZipCodeAsync(string value)
+            => _context.Set<Cep>().SingleOrDefaultAsync(x => x.Numero == value);
+
+        //
+        // Summary:
+        //     /// Method responsible for search by uf. ///
+        //
+        // Parameters:
+        //   value:
+        //     The value param.
+        //
+        public Task<List<Cep>> FindByStateAsync(string value)
+            => _context.Set<Cep>().Where(x => x.Uf == value).AsNoTracking().ToListAsync();
     }
 }

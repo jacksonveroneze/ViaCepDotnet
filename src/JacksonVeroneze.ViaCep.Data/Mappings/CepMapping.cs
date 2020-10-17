@@ -36,16 +36,18 @@ namespace JacksonVeroneze.ViaCep.Data.Mappings
                 .HasColumnName("uf")
                 .HasColumnType("char(2)");
 
-            builder.Property(c => c.Unidade)
-                .HasColumnName("unidade")
-                .HasColumnType("int");
-
             builder.Property(c => c.Ibge)
                 .HasColumnName("ibge");
 
             builder.Property(c => c.Gia)
                 .HasColumnName("gia")
                 .HasColumnType("varchar(500)");
+
+            builder.Property(c => c.Ddd)
+                .HasColumnName("ddd");
+
+            builder.Property(c => c.Siafi)
+                .HasColumnName("siafi");
 
             builder.Property(c => c.CreatedAt)
                 .HasColumnName("created_at");
