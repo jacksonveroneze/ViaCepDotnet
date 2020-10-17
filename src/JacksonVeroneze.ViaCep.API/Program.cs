@@ -22,7 +22,7 @@ namespace JacksonVeroneze.ViaCep.API
 
             Log.Information("Starting up");
 
-            var host = CreateHostBuilder(args).Build();
+            IHost host = CreateHostBuilder(args).Build();
 
             Log.Information("Performing migrations.");
 
