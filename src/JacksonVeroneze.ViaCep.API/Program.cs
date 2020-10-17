@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JacksonVeroneze.ViaCep.BuildingBlocks;
+using JacksonVeroneze.ViaCep.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -19,7 +22,17 @@ namespace JacksonVeroneze.ViaCep.API
 
             Log.Information("Starting up");
 
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            Log.Information("Performing migrations.");
+
+            using IServiceScope scope = host.Services.CreateScope();
+
+            DatabaseContext db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+
+            db.Database.Migrate();
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

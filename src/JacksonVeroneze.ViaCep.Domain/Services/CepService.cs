@@ -16,6 +16,14 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
 
         public readonly IList<string> _errors = new List<string>();
 
+        //
+        // Summary:
+        //     /// Method responsible for initializing the service. ///
+        //
+        // Parameters:
+        //   context:
+        //     The context param.
+        //
         public CepService(ICepHttpService cepHttpService, ICepRepository cepRepository, IMapper mapper)
         {
             _cepHttpService = cepHttpService;
@@ -23,6 +31,14 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
             _mapper = mapper;
         }
 
+        //
+        // Summary:
+        //     /// Method responsible for search by cep. ///
+        //
+        // Parameters:
+        //   value:
+        //     The value param.
+        //
         public async Task<SearchDataResult> SearchZipCodeAsync(string value)
         {
             if (value.Length != 9)
@@ -38,17 +54,31 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
             {
                 ViaCepResponse response = await _cepHttpService.FindAsync(value);
 
-                if (response != null)
+                if (response.Erro is false)
                 {
                     postalCode = new Cep(response.Cep, response.Logradouro, response.Complemento, response.Bairro, response.Localidade, response.Uf, response.Ibge, response.Gia, response.Ddd, response.Siafi);
 
                     await _cepRepository.AddAsync(postalCode);
+                }
+                else
+                {
+                    _errors.Add("O CEP informado não foi encontrado");
+
+                    return null;
                 }
             }
 
             return _mapper.Map<Cep, SearchDataResult>(postalCode);
         }
 
+        //
+        // Summary:
+        //     /// Method responsible for search by uf. ///
+        //
+        // Parameters:
+        //   value:
+        //     The value param.
+        //
         public async Task<IList<SearchDataResult>> SearchStateAsync(string value)
         {
             if (value.Length != 2)

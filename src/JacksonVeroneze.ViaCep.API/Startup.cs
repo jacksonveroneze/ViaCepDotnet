@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Security.Authentication;
 using AutoMapper;
@@ -11,6 +12,7 @@ using JacksonVeroneze.ViaCep.Domain.Interfaces;
 using JacksonVeroneze.ViaCep.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,6 +94,14 @@ namespace JacksonVeroneze.ViaCep.API
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+
+            CultureInfo[] supportedCultures = new[] { new CultureInfo("pt-BR") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(culture: "pt-BR", uiCulture: "pt-BR"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseRouting();
 

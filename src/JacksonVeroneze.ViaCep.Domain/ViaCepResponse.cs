@@ -21,5 +21,7 @@ namespace JacksonVeroneze.ViaCep.Domain
         public int Ddd { get; set; }
 
         public int Siafi { get; set; }
+
+        public bool Erro { get; set; }
     }
 }
