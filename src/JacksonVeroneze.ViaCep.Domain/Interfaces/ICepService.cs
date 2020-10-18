@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using JacksonVeroneze.ViaCep.Domain.Command;
+using JacksonVeroneze.ViaCep.Domain.Dto;
 
 namespace JacksonVeroneze.ViaCep.Domain.Interfaces
 {
@@ -9,7 +9,5 @@ namespace JacksonVeroneze.ViaCep.Domain.Interfaces
         Task<SearchDataResult> SearchZipCodeAsync(string value);
 
         Task<IList<SearchDataResult>> SearchStateAsync(string value);
-
-        public IList<string> GetErrors();
     }
 }

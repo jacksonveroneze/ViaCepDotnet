@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
+﻿using System.Net.Mime;
 using System.Threading.Tasks;
-using JacksonVeroneze.ViaCep.Domain.Command;
 using JacksonVeroneze.ViaCep.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -48,17 +45,7 @@ namespace JacksonVeroneze.ViaCep.API.Controllers
         {
             _logger.LogInformation("Request: {0}", $"Solicitado busca de CEP: [{value}].");
 
-            SearchDataResult result = await _cepService.SearchZipCodeAsync(value);
-
-            if (result is null && _cepService.GetErrors().Any())
-            {
-                _logger.LogInformation("Request: {0}",
-                    $"Houve os seguintes erros: [{string.Join(";", _cepService.GetErrors())}].");
-
-                return BadRequest(new {Errors = _cepService.GetErrors()});
-            }
-
-            return Ok(result);
+            return Ok(await _cepService.SearchZipCodeAsync(value));
         }
 
         //
@@ -76,17 +63,7 @@ namespace JacksonVeroneze.ViaCep.API.Controllers
         {
             _logger.LogInformation("Request: {0}", $"Solicitado busca por UF: [{value}].");
 
-            IList<SearchDataResult> result = await _cepService.SearchStateAsync(value);
-
-            if (result is null && _cepService.GetErrors().Any())
-            {
-                _logger.LogInformation("Request: {0}",
-                    $"Houve os seguintes erros: [{string.Join(";", _cepService.GetErrors())}].");
-
-                return BadRequest(new {Errors = _cepService.GetErrors()});
-            }
-
-            return Ok(result);
+            return Ok(await _cepService.SearchStateAsync(value));
         }
     }
 }

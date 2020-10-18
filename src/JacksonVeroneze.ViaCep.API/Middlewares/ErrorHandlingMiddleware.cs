@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using JacksonVeroneze.ViaCep.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -29,7 +30,10 @@ namespace JacksonVeroneze.ViaCep.API.Middlewares
                 string result = JsonConvert.SerializeObject(new {error = e.Message});
 
                 context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+
+                context.Response.StatusCode = e.GetBaseException() is DomainException
+                    ? (int)HttpStatusCode.BadRequest
+                    : (int)HttpStatusCode.InternalServerError;
 
                 _logger.LogError(result);
 

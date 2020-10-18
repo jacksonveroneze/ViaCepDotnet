@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.ViaCep.Domain.Command
+namespace JacksonVeroneze.ViaCep.Domain.Dto
 {
     public class SearchDataResult
     {

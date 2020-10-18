@@ -31,7 +31,7 @@ namespace JacksonVeroneze.ViaCep.Data.Repository
         //     The value param.
         //
         public Task<Cep> FindByZipCodeAsync(string value)
-            => _context.Set<Cep>().SingleOrDefaultAsync(x => x.Numero == value);
+            => _context.Set<Cep>().AsNoTracking().SingleOrDefaultAsync(x => x.Numero == value);
 
         //
         // Summary:

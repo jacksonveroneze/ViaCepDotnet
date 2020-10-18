@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
-using JacksonVeroneze.ViaCep.Domain.Command;
+using JacksonVeroneze.ViaCep.Domain.Dto;
 using JacksonVeroneze.ViaCep.Domain.Entities;
+using JacksonVeroneze.ViaCep.Domain.Exceptions;
 using JacksonVeroneze.ViaCep.Domain.Http;
 using JacksonVeroneze.ViaCep.Domain.Interfaces;
+using JacksonVeroneze.ViaCep.Domain.Util;
 
 namespace JacksonVeroneze.ViaCep.Domain.Services
 {
@@ -14,15 +17,19 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
         private readonly ICepRepository _cepRepository;
         private readonly IMapper _mapper;
 
-        public readonly IList<string> _errors = new List<string>();
-
         //
         // Summary:
         //     /// Method responsible for initializing the service. ///
         //
         // Parameters:
-        //   context:
-        //     The context param.
+        //   cepHttpService:
+        //     The cepHttpService param.
+        //
+        //   cepRepository:
+        //     The cepRepository param.
+        //
+        //   mapper:
+        //     The mapper param.
         //
         public CepService(ICepHttpService cepHttpService, ICepRepository cepRepository, IMapper mapper)
         {
@@ -41,32 +48,23 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
         //
         public async Task<SearchDataResult> SearchZipCodeAsync(string value)
         {
-            if (value.Length != 9)
-            {
-                _errors.Add("O CEP informado é inválido");
-
-                return null;
-            }
+            if (value.Length != 9 || Regex.IsMatch(value, "\\d{5}-\\d{3}") is false)
+                throw new DomainException("O CEP informado é inválido.");
 
             Cep postalCode = await _cepRepository.FindByZipCodeAsync(value);
 
-            if (postalCode is null)
-            {
-                ViaCepResponse response = await _cepHttpService.FindAsync(value);
+            if (postalCode != null)
+                return _mapper.Map<Cep, SearchDataResult>(postalCode);
 
-                if (response.Erro is false)
-                {
-                    postalCode = new Cep(response.Cep, response.Logradouro, response.Complemento, response.Bairro, response.Localidade, response.Uf, response.Ibge, response.Gia, response.Ddd, response.Siafi);
+            ViaCepResponse response = await _cepHttpService.FindAsync(value);
 
-                    await _cepRepository.AddAsync(postalCode);
-                }
-                else
-                {
-                    _errors.Add("O CEP informado não foi encontrado");
+            if (response.Erro is true)
+                throw new DomainException("O CEP informado não foi encontrado no webservice VIACEP.");
 
-                    return null;
-                }
-            }
+            postalCode = new Cep(response.Cep, response.Logradouro, response.Complemento, response.Bairro,
+                response.Localidade, response.Uf, response.Ibge, response.Gia, response.Ddd, response.Siafi);
+
+            await _cepRepository.AddAsync(postalCode);
 
             return _mapper.Map<Cep, SearchDataResult>(postalCode);
         }
@@ -81,21 +79,14 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
         //
         public async Task<IList<SearchDataResult>> SearchStateAsync(string value)
         {
-            if (value.Length != 2)
-            {
-                _errors.Add("O estado informado é inválido");
 
-                return null;
-            }
+
+            if (value.Length != 2 || ListStates.List.Contains(value) is false)
+                throw new DomainException("O estado informado não é válido.");
 
             List<Cep> listPostalCode = await _cepRepository.FindByStateAsync(value);
 
             return _mapper.Map<List<Cep>, List<SearchDataResult>>(listPostalCode);
-        }
-
-        public IList<string> GetErrors()
-        {
-            return _errors;
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.ViaCep.Domain
+namespace JacksonVeroneze.ViaCep.Domain.Dto
 {
     public class ViaCepResponse
     {

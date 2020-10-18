@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using JacksonVeroneze.ViaCep.Domain.Dto;
 using Refit;
 
 namespace JacksonVeroneze.ViaCep.Domain.Http
