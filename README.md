@@ -95,6 +95,8 @@ curl -X GET "http://localhost:8000/search/state/SC" -H "accept: application/json
 curl -X GET "http://localhost:8000/health"
 ````
 
+![Image](https://github.com/jacksonveroneze/ViaCepDotnet/blob/main/images/1.png)
+
 ### Tecnologias:
 
 - C# 8.0
