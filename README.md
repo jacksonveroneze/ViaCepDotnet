@@ -1,6 +1,6 @@
 ## ViaCepDotnet
 
-Projeto desenvolvido com o objetivo de realizar buscas de CEPS no webserice do VIA CEP.
+Projeto desenvolvido com o objetivo de realizar buscas de CEPS no webservice do VIA CEP.
 
 ### Iniciando
 Use as intruções abaixo para rodar o projeto.
@@ -33,7 +33,7 @@ Siga estas etapas para para rodar o projeto em produção:
      ```
      dotnet run
      ```
-  4. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:5001/swagger
+  4. Agora seus projetos estão em execução, abra o navegador e acesse: https://localhost:5001/swagger
 
 #### Setup (Com Docker)
 
@@ -46,14 +46,14 @@ Siga estas etapas para para rodar o projeto em produção:
      docker-compose build
      docker-compose up -d
      ```
-  3. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:5000/swagger
+  3. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:8000/swagger
 
 ### Exemplos
 
-#### Api
+#### Api (Busca por CEP)
 
 ```
-curl -X GET "http://localhost:5000/search-cep/89665-000" -H "accept: application/json"
+curl -X GET "http://localhost:8000/search/zip-code/89665-000" -H "accept: application/json"
 
 {
   "numero": "89665-000",
@@ -68,13 +68,34 @@ curl -X GET "http://localhost:5000/search-cep/89665-000" -H "accept: application
 }
 ````
 
+#### Api (Busca por UF)
+
+```
+curl -X GET "http://localhost:8000/search/state/SC" -H "accept: application/json"
+
+[
+  {
+    "numero": "89665-000",
+    "logradouro": "",
+    "complemento": "",
+    "bairro": "",
+    "localidade": "Capinzal",
+    "uf": "SC",
+    "ibge": 4203907,
+    "gia": "",
+    "ddd": 49,
+    "siafi": 8075
+  }
+]
+````
+
 #### Api (Healthcheck)
 
 ```
-curl -X GET "http://localhost:5000/health"
+curl -X GET "http://localhost:8000/health"
 ````
 
-### Technologies:
+### Tecnologias:
 
 - C# 8.0
 - ASP.NET Core 3.1
@@ -86,8 +107,6 @@ curl -X GET "http://localhost:5000/health"
 - Serilog
 - SQL Server
 - Docker
-- Github Actions
-- SonarQube
 
 ### Autor
 * **Jackson Veroneze** - *Contribuidor* - [JacksonVeroneze](http://github.com/JacksonVeroneze)
