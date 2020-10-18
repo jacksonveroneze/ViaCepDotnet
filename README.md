@@ -95,7 +95,7 @@ curl -X GET "http://localhost:8000/search/state/SC" -H "accept: application/json
 curl -X GET "http://localhost:8000/health"
 ````
 
-### Technologies:
+### Tecnologias:
 
 - C# 8.0
 - ASP.NET Core 3.1
