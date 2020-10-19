@@ -95,6 +95,12 @@ curl -X GET "http://localhost:8000/search/state/SC" -H "accept: application/json
 curl -X GET "http://localhost:8000/health"
 ````
 
+#### Rodar os testes
+
+```
+dotnet test
+````
+
 ![Image](https://github.com/jacksonveroneze/ViaCepDotnet/blob/main/images/1.png)
 
 ### Tecnologias:
