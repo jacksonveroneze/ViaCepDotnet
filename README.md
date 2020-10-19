@@ -48,6 +48,8 @@ Siga estas etapas para para rodar o projeto em produção:
      ```
   3. Agora seus projetos estão em execução, abra o navegador e acesse: http://localhost:8000/swagger
 
+![Image](https://github.com/jacksonveroneze/ViaCepDotnet/blob/main/images/1.png)
+
 ### Exemplos
 
 #### Api (Busca por CEP)
@@ -100,8 +102,6 @@ curl -X GET "http://localhost:8000/health"
 ```
 dotnet test
 ````
-
-![Image](https://github.com/jacksonveroneze/ViaCepDotnet/blob/main/images/1.png)
 
 ### Tecnologias:
 
