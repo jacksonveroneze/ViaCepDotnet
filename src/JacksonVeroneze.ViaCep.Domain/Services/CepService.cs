@@ -81,7 +81,7 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
         {
 
 
-            if (value.Length != 2 || ListStates.List.Contains(value) is false)
+            if (value.Length != 2 || ListStates.List.Contains(value.ToUpper()) is false)
                 throw new DomainException("O estado informado não é válido.");
 
             List<Cep> listPostalCode = await _cepRepository.FindByStateAsync(value);
