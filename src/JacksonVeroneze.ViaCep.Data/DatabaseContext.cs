@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using JacksonVeroneze.ViaCep.Data.Mappings;
+﻿using JacksonVeroneze.ViaCep.Data.Mappings;
 using JacksonVeroneze.ViaCep.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

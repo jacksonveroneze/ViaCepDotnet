@@ -79,8 +79,6 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
         //
         public async Task<IList<SearchDataResult>> SearchStateAsync(string value)
         {
-
-
             if (value.Length != 2 || ListStates.List.Contains(value.ToUpper()) is false)
                 throw new DomainException("O estado informado não é válido.");
 

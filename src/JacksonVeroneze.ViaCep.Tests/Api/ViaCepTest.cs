@@ -1,52 +1,57 @@
-using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using JacksonVeroneze.ViaCep.API;
 using JacksonVeroneze.ViaCep.Domain.Dto;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
+using JacksonVeroneze.ViaCep.Domain.Entities;
+using JacksonVeroneze.ViaCep.Tests.Config;
 using Xunit;
 
 namespace JacksonVeroneze.ViaCep.Tests.Api
 {
+    [Collection(nameof(IntegrationApiTestsFixtureCollection))]
     public class ViaCepTest
     {
-        private readonly HttpClient _httpClient;
+        private readonly IntegrationTestsFixture<StartupApiTests> _testsFixture;
 
-        public ViaCepTest()
+        public ViaCepTest(IntegrationTestsFixture<StartupApiTests> testsFixture)
+            => _testsFixture = testsFixture;
+
+        [Fact(DisplayName = "Deve buscar corretamente os dados.")]
+        [Trait("Categoria", "SearchController")]
+        public async Task SearchController_GetByZipCode_DeveEfetuarABuscaCepCorretamente()
         {
-            IHostBuilder hostBuilder = new HostBuilder()
-                .ConfigureWebHost(webHost =>
-                {
-                    webHost.UseTestServer();
-                    webHost.UseStartup<Startup>();
-                });
+            // Arrange && Act
+            await _testsFixture.ClearDatabase();
 
-            IHost host = hostBuilder.Start();
+            HttpResponseMessage response = await _testsFixture.Client.GetAsync("search/zip-code/89665-000");
 
-            _httpClient = host.GetTestClient();
+            SearchDataResult result = await _testsFixture.DeserializeObject<SearchDataResult>(response);
 
-            _httpClient.BaseAddress = new Uri("http://localhost:5000");
+            // Assert
+            result.Uf.Should().Be("SC");
+            result.Localidade.Should().Be("Capinzal");
         }
 
         [Fact(DisplayName = "Deve buscar corretamente os dados.")]
         [Trait("Categoria", "SearchController")]
-        public async Task SearchController_GetByZipCode_DeveEfetuarABuscaCalculoCorretamente()
+        public async Task SearchController_GetByZipCode_DeveEfetuarABuscaCepCorretamente1()
         {
             // Arrange
-            HttpResponseMessage response = await _httpClient.GetAsync("search/zip-code/89665-000");
+            Cep cep = new Cep("89665-000", "Rua Tucano", "Perto da escola", "Recanto dos Pásaros", "Capinzal", "SC", 123456, "GIA", 49, 1);
+
+            await _testsFixture.MockInDatabase(cep);
 
             // Act
-            string responseString = await response.Content.ReadAsStringAsync();
+            HttpResponseMessage response = await _testsFixture.Client.GetAsync("search/zip-code/89665-000");
 
-            SearchDataResult result = JsonConvert.DeserializeObject<SearchDataResult>(responseString);
+            SearchDataResult result = await _testsFixture.DeserializeObject<SearchDataResult>(response);
 
             // Assert
-            Assert.Equal("SC", result.Uf);
-            Assert.Equal("Capinzal", result.Localidade);
+            result.Uf.Should().Be("SC");
+            result.Localidade.Should().Be("Capinzal");
         }
 
         [Fact(DisplayName = "Deve retornar erro quando informar um cep inexistênte.")]
@@ -54,10 +59,10 @@ namespace JacksonVeroneze.ViaCep.Tests.Api
         public async Task SearchController_GetByZipCode_DeveRetornarErroCepInexistente()
         {
             // Arrange && Act
-            HttpResponseMessage response = await _httpClient.GetAsync("search/zip-code/89661-000");
+            HttpResponseMessage response = await _testsFixture.Client.GetAsync("search/zip-code/89661-000");
 
             // Assert
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact(DisplayName = "Deve retornar erro quando informar um cep no formato inválido.")]
@@ -65,22 +70,41 @@ namespace JacksonVeroneze.ViaCep.Tests.Api
         public async Task SearchController_GetByZipCode_DeveRetornarErroCepFormatoInvalido()
         {
             // Arrange && Act
-            HttpResponseMessage response = await _httpClient.GetAsync("search/zip-code/89665-0");
+            HttpResponseMessage response = await _testsFixture.Client.GetAsync("search/zip-code/89665-0");
 
             // Assert
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact(DisplayName = "Deve retornar erro quando informar um estado incorreto.")]
         [Trait("Categoria", "SearchController")]
-        public async Task SearchController_GetByState_eveRetornarErroUfInvalido()
+        public async Task SearchController_GetByState_DeveRetornarErroUfInvalido()
         {
             // Arrange && Act
-            HttpResponseMessage response = await _httpClient.GetAsync("/search/state/SX");
+            HttpResponseMessage response = await _testsFixture.Client.GetAsync("/search/state/SX");
 
             // Assert
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
+        [Fact(DisplayName = "Deve retornar erro quando informar um estado incorreto.")]
+        [Trait("Categoria", "SearchController")]
+        public async Task SearchController_GetByState_DeveEfetuarABuscaUfCorretamente()
+        {
+            // Arrange
+            Cep cep = new Cep("89665-000", "Rua Tucano", "Perto da escola", "Recanto dos Pásaros", "Capinzal", "SC", 123456, "GIA", 49, 1);
+
+            await _testsFixture.MockInDatabase(cep);
+
+            // Act
+            HttpResponseMessage response = await _testsFixture.Client.GetAsync("/search/state/SC");
+
+            IList<SearchDataResult> result = await _testsFixture.DeserializeObject<IList<SearchDataResult>>(response);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            result.Should().NotBeEmpty();
+        }
     }
 }
