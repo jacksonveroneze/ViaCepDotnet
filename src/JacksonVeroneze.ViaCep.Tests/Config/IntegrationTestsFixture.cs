@@ -16,9 +16,9 @@ namespace JacksonVeroneze.ViaCep.Tests.Config
 
     public class IntegrationTestsFixture<TStartup> : IDisposable where TStartup : class
     {
-        public readonly AppFactory<TStartup> Factory;
-        public HttpClient Client;
-        public readonly DatabaseContext _context;
+        private readonly AppFactory<TStartup> Factory;
+        public readonly HttpClient Client;
+        private readonly DatabaseContext _context;
 
         public IntegrationTestsFixture()
         {

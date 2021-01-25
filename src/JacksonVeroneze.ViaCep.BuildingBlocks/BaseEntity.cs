@@ -4,8 +4,8 @@ namespace JacksonVeroneze.ViaCep.BuildingBlocks
 {
     public abstract class BaseEntity
     {
-        public int Id { get; private set; }
-        
+        public Guid Id { get; } = Guid.NewGuid();
+
         public DateTime CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; } = null;
@@ -28,7 +28,7 @@ namespace JacksonVeroneze.ViaCep.BuildingBlocks
 
         //
         // Summary:
-        //     /// Method responsible for returning a string 
+        //     /// Method responsible for returning a string
         //     representation of the object. ///
         //
         public override string ToString()

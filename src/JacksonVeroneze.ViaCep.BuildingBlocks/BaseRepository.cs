@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,7 @@ namespace JacksonVeroneze.ViaCep.BuildingBlocks
         public Task<List<T>> FindAllAsync()
             => _context.Set<T>().AsNoTracking().ToListAsync();
 
-        public Task<T> FindAsync(int id)
+        public Task<T> FindAsync(Guid id)
             => _context.Set<T>().SingleOrDefaultAsync(x => x.Id == id);
     }
 }

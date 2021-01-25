@@ -12,7 +12,7 @@ namespace JacksonVeroneze.ViaCep.Tests.Config
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseTestServer();
-            builder.UseStartup<StartupApiTests>();
+            builder.UseStartup<TStartup>();
             builder.UseEnvironment("Testing");
 
             base.ConfigureWebHost(builder);

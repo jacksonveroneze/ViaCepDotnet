@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace JacksonVeroneze.ViaCep.BuildingBlocks
@@ -9,6 +10,6 @@ namespace JacksonVeroneze.ViaCep.BuildingBlocks
 
         Task<List<T>> FindAllAsync();
 
-        Task<T> FindAsync(int id);
+        Task<T> FindAsync(Guid id);
     }
 }
