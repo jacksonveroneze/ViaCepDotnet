@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace JacksonVeroneze.ViaCep.Tests.Config
+namespace JacksonVeroneze.ViaCep.IntegrationTests.Config
 {
     [CollectionDefinition(nameof(IntegrationApiTestsFixtureCollection))]
     public class IntegrationApiTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<StartupApiTests>>

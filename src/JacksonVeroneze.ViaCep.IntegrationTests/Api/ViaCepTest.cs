@@ -6,10 +6,10 @@ using FluentAssertions;
 using JacksonVeroneze.ViaCep.API;
 using JacksonVeroneze.ViaCep.Domain.Dto;
 using JacksonVeroneze.ViaCep.Domain.Entities;
-using JacksonVeroneze.ViaCep.Tests.Config;
+using JacksonVeroneze.ViaCep.IntegrationTests.Config;
 using Xunit;
 
-namespace JacksonVeroneze.ViaCep.Tests.Api
+namespace JacksonVeroneze.ViaCep.IntegrationTests.Api
 {
     [Collection(nameof(IntegrationApiTestsFixtureCollection))]
     public class ViaCepTest

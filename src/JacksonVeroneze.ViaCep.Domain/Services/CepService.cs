@@ -54,7 +54,7 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
             Cep postalCode = await _cepRepository.FindByZipCodeAsync(value);
 
             if (postalCode != null)
-                return _mapper.Map<Cep, SearchDataResult>(postalCode);
+                return _mapper.Map<SearchDataResult>(postalCode);
 
             ViaCepResponse response = await _cepHttpService.FindAsync(value);
 
@@ -66,7 +66,7 @@ namespace JacksonVeroneze.ViaCep.Domain.Services
 
             await _cepRepository.AddAsync(postalCode);
 
-            return _mapper.Map<Cep, SearchDataResult>(postalCode);
+            return _mapper.Map<SearchDataResult>(postalCode);
         }
 
         //

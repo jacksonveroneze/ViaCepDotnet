@@ -1,11 +1,10 @@
-using JacksonVeroneze.ViaCep.API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace JacksonVeroneze.ViaCep.Tests.Config
+namespace JacksonVeroneze.ViaCep.IntegrationTests.Config
 {
     public class AppFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
