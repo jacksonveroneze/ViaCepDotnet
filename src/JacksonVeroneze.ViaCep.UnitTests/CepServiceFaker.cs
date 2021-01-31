@@ -14,9 +14,8 @@ namespace JacksonVeroneze.ViaCep.UnitTests
                 .RuleFor(x => x.Complemento, f => f.Address.SecondaryAddress())
                 .RuleFor(x => x.Bairro, f => f.Address.Direction())
                 .RuleFor(x => x.Localidade, f => f.Address.SecondaryAddress())
-                .RuleFor(x => x.Uf, f => f.Address.StateAbbr())
+                .RuleFor(x => x.Uf, "SC")
                 .RuleFor(x => x.Ibge, 020423)
-                .RuleFor(x => x.Uf, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Gia, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Ddd, 49)
                 .RuleFor(x => x.Siafi, 0);
@@ -32,7 +31,6 @@ namespace JacksonVeroneze.ViaCep.UnitTests
                 .RuleFor(x => x.Localidade, f => f.Address.SecondaryAddress())
                 .RuleFor(x => x.Uf, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Ibge, 020423)
-                .RuleFor(x => x.Uf, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Gia, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Ddd, 49)
                 .RuleFor(x => x.Siafi, 0);
@@ -48,7 +46,6 @@ namespace JacksonVeroneze.ViaCep.UnitTests
                 .RuleFor(x => x.Localidade, f => f.Address.SecondaryAddress())
                 .RuleFor(x => x.Uf, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Ibge, 020423)
-                .RuleFor(x => x.Uf, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Gia, f => f.Address.StateAbbr())
                 .RuleFor(x => x.Ddd, 49)
                 .RuleFor(x => x.Siafi, 0);

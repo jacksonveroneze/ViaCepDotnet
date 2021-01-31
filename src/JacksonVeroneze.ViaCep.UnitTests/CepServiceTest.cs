@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
@@ -27,7 +29,7 @@ namespace JacksonVeroneze.ViaCep.UnitTests
             => _cepServiceFixture = cepServiceFixture;
 
         [Fact(DisplayName = "DeveBuscarOsDadosNoWebServiceQuandoNaoExistirNoBancoDedados.")]
-        [Trait("CepService", "CepService")]
+        [Trait("CepService", "FindByZipCodeAsync")]
         public async Task CepService_FindByZipCodeAsync_DeveBuscarOsDadosNoWebServiceQuandoNaoExistirNoBancoDedados()
         {
             // Arange
@@ -64,7 +66,7 @@ namespace JacksonVeroneze.ViaCep.UnitTests
         }
 
         [Fact(DisplayName = "DeveBuscarOsDadosNoBancoDedados.")]
-        [Trait("CepService", "CepService")]
+        [Trait("CepService", "FindByZipCodeAsync")]
         public async Task CepService_FindByZipCodeAsync_DeveBuscarOsDadosNoBancoDedados()
         {
             // Arange
@@ -101,7 +103,7 @@ namespace JacksonVeroneze.ViaCep.UnitTests
         }
 
         [Fact(DisplayName = "DeveGerarDomainExceptionQuandoInformarCepInvalido.")]
-        [Trait("CepService", "CepService")]
+        [Trait("CepService", "FindByZipCodeAsync")]
         public async Task CepService_FindByZipCodeAsync_DeveGerarDomainExceptionQuandoInformarCepInvalido()
         {
             // Arange
@@ -122,7 +124,7 @@ namespace JacksonVeroneze.ViaCep.UnitTests
         }
 
         [Fact(DisplayName = "DeveGerarDomainExceptionQuandoInformarCepInexistente.")]
-        [Trait("CepService", "CepService")]
+        [Trait("CepService", "FindByZipCodeAsync")]
         public async Task CepService_FindByZipCodeAsync_DeveGerarDomainExceptionQuandoInformarCepInexistente()
         {
             // Arange
@@ -148,6 +150,64 @@ namespace JacksonVeroneze.ViaCep.UnitTests
             _cepRepositoryMock.Verify(x => x.FindByZipCodeAsync(It.IsAny<string>()), Times.Once);
             _cepHttpServiceMock.Verify(x => x.FindAsync(It.IsAny<string>()), Times.Once);
             _cepRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Cep>()), Times.Never);
+        }
+
+
+        [Fact(DisplayName = "DeveBuscarOsDadosNoWebServiceQuandoNaoExistirNoBancoDedados.")]
+        [Trait("CepService", "SearchStateAsync")]
+        public async Task CepService_SearchStateAsync_DeveBuscarOsDadosCorretamente()
+        {
+            // Arange
+            _cepHttpServiceMock = new Mock<ICepHttpService>();
+            _cepRepositoryMock = new Mock<ICepRepository>();
+            _mapperMock = new Mock<IMapper>();
+
+            IList<Cep> cepFaker = CepServiceFaker.GenerateFakerCep().Generate(1);
+            IList<SearchDataResult> searchDataResultFaker = CepServiceFaker.GenerateFakerSearchDataResult().Generate(1);
+
+            _cepRepositoryMock
+                .Setup(x => x.FindByStateAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<Cep>(cepFaker)));
+
+            _mapperMock
+                .Setup(x => x.Map<List<Cep>, List<SearchDataResult>>(It.IsAny<List<Cep>>()))
+                .Returns(new List<SearchDataResult>(searchDataResultFaker));
+
+            _cepService = new CepService(
+                _cepHttpServiceMock.Object,
+                _cepRepositoryMock.Object,
+                _mapperMock.Object);
+
+            // Act
+            IList<SearchDataResult> result = await _cepService.SearchStateAsync(cepFaker.First().Uf);
+
+            // Assert
+            result.Should().NotBeNull();
+
+            _cepRepositoryMock.Verify(x => x.FindByStateAsync(It.IsAny<string>()), Times.Once);
+            _mapperMock.Verify(x => x.Map<List<Cep>, List<SearchDataResult>>(It.IsAny<List<Cep>>()), Times.Once);
+        }
+
+
+        [Fact(DisplayName = "DeveGerarDomainExceptionQuandoInformarUFInexistente.")]
+        [Trait("CepService", "SearchStateAsync")]
+        public async Task CepService_SearchStateAsync_DeveGerarDomainExceptionQuandoInformarUFInexistente()
+        {
+            // Arange
+            _cepHttpServiceMock = new Mock<ICepHttpService>();
+            _cepRepositoryMock = new Mock<ICepRepository>();
+            _mapperMock = new Mock<IMapper>();
+
+            _cepService = new CepService(
+                _cepHttpServiceMock.Object,
+                _cepRepositoryMock.Object,
+                _mapperMock.Object);
+
+            // Act
+            Func<Task> result = () => _cepService.SearchStateAsync("XX");
+
+            // Assert
+            await result.Should().ThrowAsync<DomainException>();
         }
     }
 }
