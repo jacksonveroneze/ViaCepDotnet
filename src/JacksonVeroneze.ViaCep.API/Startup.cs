@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Retry;
+using Prometheus;
 using Refit;
 
 namespace JacksonVeroneze.ViaCep.API
@@ -52,12 +53,7 @@ namespace JacksonVeroneze.ViaCep.API
 
             services.AddRefitClient<ICepHttpService>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration["UrlViaCep"]))
-                .ConfigurePrimaryHttpMessageHandler(sp => new HttpClientHandler
-                {
-                    AllowAutoRedirect = true,
-                    ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true,
-                    SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12
-                })
+                .ConfigurePrimaryHttpMessageHandler(sp => new HttpClientHandler {AllowAutoRedirect = true, ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true, SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12})
                 .AddPolicyHandler(retryPolicy);
 
             services.AddEntityFrameworkSqlServer()
@@ -95,13 +91,12 @@ namespace JacksonVeroneze.ViaCep.API
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            CultureInfo[] supportedCultures = new[] { new CultureInfo("pt-BR") };
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture(culture: "pt-BR", uiCulture: "pt-BR"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
+            CultureInfo[] supportedCultures = new[] {new CultureInfo("pt-BR")};
+            app.UseRequestLocalization(new RequestLocalizationOptions {DefaultRequestCulture = new RequestCulture(culture: "pt-BR", uiCulture: "pt-BR"), SupportedCultures = supportedCultures, SupportedUICultures = supportedCultures});
+
+            app.UseMetricServer();
+
+            app.UseHttpMetrics();
 
             app.UseRouting();
 

@@ -12,6 +12,8 @@ namespace JacksonVeroneze.ViaCep.Data.Mappings
 
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.Id).IsUnicode();
+
             builder.Property(c => c.Numero)
                 .HasColumnName("numero")
                 .HasColumnType("char(9)");
